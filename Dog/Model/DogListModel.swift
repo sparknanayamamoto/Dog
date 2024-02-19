@@ -6,31 +6,36 @@
 //
 
 import Foundation
+import UIKit
 
 
-class DogList {
+struct DogResponse: Codable {
+    let message: [String: [String]]
+}
+
+enum DogEroor: Error {
+    case invalidURL
+    case networkError
+    case decodeError
+}
+
+
+class Dog {
     
-    func fetchDogList() async -> Result<[], Error> {
-        let urlString = "https://dog.ceo/api/breeds/list/all"
-        guard let requestUrl = URL(string: urlString) else {
-            // コードミスでしか通らない
-            return
+    func fetchDogBreeds() async -> Result<DogResponse, DogEroor> {
+        guard let urlString = URL(string: "https://dog.ceo/api/breeds/list/all") else {
+            return .failure(.invalidURL)
         }
-        let dataTask = URLSession.shared.dataTask(with: requestUrl) { (data, response, error) in
-            // 通信エラー
-            if let error = error {
-                print("Unexpected error: \(error.localizedDescription).")
-                return
-            }
-            
-            // HTTPレスポンスコードエラー
-            if let response = response as? HTTPURLResponse {
-                if !(200...299).contains(response.statusCode) {
-                    print("Request Failed - Status Code: \(response .statusCode)")
-                    return
-                }
-            }
-        let date = Date().ISO8601Format()
         
+        do {
+            let (data,_) = try await URLSession.shared.data(from: urlString)
+            let decoder = JSONDecoder()
+            let dogJsonData = try decoder.decode(DogResponse.self, from: data)
+            return .success(dogJsonData)
+            
+        } catch {
+            return .failure(.decodeError)
+        }
     }
+    
 }
