@@ -11,7 +11,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
     var dogResponse: DogResponse?
     let dog = Dog()
     
-    var breeds = [String()]
+    var breeds = [String]()
+    var selectedBreeds: String?
+    
     
     
     @IBOutlet weak var dogList: UITableView!
@@ -57,4 +59,13 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
             self.present(dialog, animated: true, completion: nil)
         }
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDogPhoto",
+           let indexPath = dogList.indexPathForSelectedRow,
+           let destination = segue.destination as? DogPhotoViewController {
+            destination.selectedBreeds = breeds[indexPath.row]
+        }
+    }
+    
 }

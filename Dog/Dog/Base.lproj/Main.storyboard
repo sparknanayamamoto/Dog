@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -43,6 +44,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="ldL-vj-VVH" kind="show" identifier="toDogPhoto" id="rab-yz-KPS"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -68,6 +72,71 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="468" y="-2"/>
+        </scene>
+        <!--Dog Photo View Controller-->
+        <scene sceneID="0Sy-Ts-hA7">
+            <objects>
+                <viewController id="ldL-vj-VVH" customClass="DogPhotoViewController" customModule="Dog" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Nlv-3g-RuE">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lem-fa-OTT">
+                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ITO-IK-g9D">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCollectionViewCell" id="I70-5J-vIc" customClass="CollectionViewCell" customModule="Dog" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="g52-GG-q2A">
+                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Obs-Dv-t6z">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Obs-Dv-t6z" firstAttribute="leading" secondItem="g52-GG-q2A" secondAttribute="leading" id="S5a-Fq-1hf"/>
+                                                <constraint firstAttribute="bottom" secondItem="Obs-Dv-t6z" secondAttribute="bottom" id="eqA-fX-Uo5"/>
+                                                <constraint firstAttribute="trailing" secondItem="Obs-Dv-t6z" secondAttribute="trailing" id="lk0-yd-BZs"/>
+                                                <constraint firstItem="Obs-Dv-t6z" firstAttribute="top" secondItem="g52-GG-q2A" secondAttribute="top" id="yM0-hk-DU5"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <connections>
+                                            <outlet property="dogImage" destination="Obs-Dv-t6z" id="hEn-X2-AdD"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="ldL-vj-VVH" id="iKv-m3-zE7"/>
+                                    <outlet property="delegate" destination="ldL-vj-VVH" id="VhL-hp-9y7"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="wLV-ZR-Qwx"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="wLV-ZR-Qwx" firstAttribute="bottom" secondItem="Lem-fa-OTT" secondAttribute="bottom" id="9X6-Fg-Eed"/>
+                            <constraint firstItem="wLV-ZR-Qwx" firstAttribute="trailing" secondItem="Lem-fa-OTT" secondAttribute="trailing" id="ME8-Aw-Jn1"/>
+                            <constraint firstItem="Lem-fa-OTT" firstAttribute="leading" secondItem="wLV-ZR-Qwx" secondAttribute="leading" id="ivP-wj-u9J"/>
+                            <constraint firstItem="Lem-fa-OTT" firstAttribute="top" secondItem="wLV-ZR-Qwx" secondAttribute="top" id="pV1-Ko-EBP"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="fIG-Df-62a"/>
+                    <connections>
+                        <outlet property="dogCollectionView" destination="Lem-fa-OTT" id="Qls-TZ-U8F"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="0Mo-6i-HiK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1381" y="-2"/>
         </scene>
     </scenes>
     <resources>

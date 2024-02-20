@@ -15,6 +15,8 @@
 		937291602B7F40DC001C2507 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9372915E2B7F40DC001C2507 /* LaunchScreen.storyboard */; };
 		937291692B7F4124001C2507 /* AlamofireImage in Frameworks */ = {isa = PBXBuildFile; productRef = 937291682B7F4124001C2507 /* AlamofireImage */; };
 		9372916F2B7F447A001C2507 /* DogListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9372916E2B7F447A001C2507 /* DogListModel.swift */; };
+		93782C2F2B832827003B41F0 /* DogPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93782C2E2B832826003B41F0 /* DogPhotoViewController.swift */; };
+		93782C312B832865003B41F0 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93782C302B832865003B41F0 /* CollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -27,6 +29,8 @@
 		9372915F2B7F40DC001C2507 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		937291612B7F40DC001C2507 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9372916E2B7F447A001C2507 /* DogListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogListModel.swift; sourceTree = "<group>"; };
+		93782C2E2B832826003B41F0 /* DogPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogPhotoViewController.swift; sourceTree = "<group>"; };
+		93782C302B832865003B41F0 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,6 +80,8 @@
 			isa = PBXGroup;
 			children = (
 				937291572B7F40DB001C2507 /* DogListViewController.swift */,
+				93782C2E2B832826003B41F0 /* DogPhotoViewController.swift */,
+				93782C302B832865003B41F0 /* CollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -165,7 +171,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93782C2F2B832827003B41F0 /* DogPhotoViewController.swift in Sources */,
 				9372916F2B7F447A001C2507 /* DogListModel.swift in Sources */,
+				93782C312B832865003B41F0 /* CollectionViewCell.swift in Sources */,
 				937291582B7F40DB001C2507 /* DogListViewController.swift in Sources */,
 				937291542B7F40DB001C2507 /* AppDelegate.swift in Sources */,
 				937291562B7F40DB001C2507 /* SceneDelegate.swift in Sources */,
