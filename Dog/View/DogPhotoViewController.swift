@@ -18,6 +18,7 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
     let dog = Dog()
     var selectedBreeds: String?
     var imageURLs: [URL] = []
+    var selectedIndex:Int = 0
     
     @IBOutlet weak var dogCollectionView: UICollectionView!
     
@@ -68,8 +69,10 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "toDetail",
            let indexPath = dogCollectionView.indexPathsForSelectedItems?.first,
-           let destination = segue.destination as? DogDetailViewController {
-            destination.breedsImage = imageURLs
+           let destinationVC = segue.destination as? DogDetailViewController {
+            destinationVC.imageURLs = imageURLs
+            destinationVC.selectedIndex = selectedIndex
+            print(imageURLs)
         }
     }
     
@@ -87,7 +90,7 @@ extension DogPhotoViewController: UICollectionViewDelegateFlowLayout {
         dogCollectionView.contentMode = .scaleAspectFill
         return CGSize(width: cellWidth, height: cellWidth)
     }
-   
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
                         UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

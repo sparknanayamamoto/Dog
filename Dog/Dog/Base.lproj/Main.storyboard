@@ -149,6 +149,17 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-a7-2HZ">
                                 <rect key="frame" x="16" y="103" width="361" height="715"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jhH-cD-eme">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="NjU-HX-lI6" firstAttribute="trailing" secondItem="jhH-cD-eme" secondAttribute="trailing" id="HLP-MZ-amb"/>
+                                    <constraint firstItem="jhH-cD-eme" firstAttribute="top" secondItem="NjU-HX-lI6" secondAttribute="top" id="MK7-Lf-p5D"/>
+                                    <constraint firstItem="NjU-HX-lI6" firstAttribute="bottom" secondItem="jhH-cD-eme" secondAttribute="bottom" id="XOB-YY-XAH"/>
+                                    <constraint firstItem="jhH-cD-eme" firstAttribute="leading" secondItem="NjU-HX-lI6" secondAttribute="leading" id="XmM-gI-uJb"/>
+                                </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="a5a-B1-2yc"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="NjU-HX-lI6"/>
                             </scrollView>
@@ -166,6 +177,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="Cat-81-svc"/>
                     <connections>
+                        <outlet property="dogImageView" destination="jhH-cD-eme" id="emW-Dy-eSf"/>
                         <outlet property="imageScrollView" destination="pXO-a7-2HZ" id="dvT-6U-vYa"/>
                     </connections>
                 </viewController>
