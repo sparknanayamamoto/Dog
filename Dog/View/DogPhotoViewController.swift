@@ -17,7 +17,7 @@ struct DogImages: Codable {
 class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
     let dog = Dog()
     var selectedBreeds: String?
-    var images: [Image] = []
+    var imageURLs: [URL] = []
     
     @IBOutlet weak var dogCollectionView: UICollectionView!
     
@@ -27,68 +27,46 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
         dogCollectionView.dataSource = self
         dogCollectionView.delegate = self
         
-        test()
-        // Do any additional setup after loading the view.
-    }
-    
-    func test () {
         Task {
             await fetchDogImage()
         }
+        if let selectedBreeds = selectedBreeds {
+            navigationItem.title = selectedBreeds
+        }
     }
     
-    func fetchDogImage() async -> Result<DogImages, DogEroor> {
+    
+    func fetchDogImage() async {
         guard let selectedBreeds = selectedBreeds else {
-            return .failure(.invalidURL)
+            return
         }
-        guard let apiUrl = URL(string: "https://dog.ceo/api/breed/\(selectedBreeds)/images") else {
-            return .failure(.invalidURL)
-        }
+        let apiUrl = "https://dog.ceo/api/breed/\(selectedBreeds)/images"
         
         do {
-            let (data,_) = try await URLSession.shared.data(from: apiUrl)
-            let decoder = JSONDecoder()
-            let dogJsonData = try decoder.decode(DogImages.self, from: data)
-            print(dogJsonData)
-            return .success(dogJsonData)
-        
+            let photoResponse = try await
+            AF.request(apiUrl).serializingDecodable(DogImages.self).value
+            
+            imageURLs = photoResponse.message.compactMap{ URL(string: $0) }
+            dogCollectionView.reloadData()
+            print(photoResponse)
         } catch {
-            return.failure(.decodeError)
+            print("Error fetching dog photos: \(error)")
         }
     }
     
-    let imageView = UIImageView()
-    func config(withURL: url) {
-        AF.request(url.responceImage) { [weak self] response in
-            switch responce.result {
-            case .success(let image):
-                self?.dogCollectionView.image = image
-            case .failure(let error):
-                self?.dogCollectionView.image = nil
-                
-            }
-        }
-    
-        
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return selectedBreeds?.count ?? 1
+        return imageURLs.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCollectionViewCell", for: indexPath)
-        let dogImage = [indexPath.row]
-        guard let imageCell = cell as? CollectionViewCell else {
-            return cell
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "imageCollectionViewCell", for: indexPath) as? CollectionViewCell else {
+            return UICollectionViewCell()
         }
+        cell.configure(with: imageURLs[indexPath.row])
+        return cell
         
-        }
-    
-            
-            return imageCell
     }
-
 }
-
 
 
 
