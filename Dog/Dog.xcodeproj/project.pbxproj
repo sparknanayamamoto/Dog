@@ -17,6 +17,7 @@
 		9372916F2B7F447A001C2507 /* DogListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9372916E2B7F447A001C2507 /* DogListModel.swift */; };
 		93782C2F2B832827003B41F0 /* DogPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93782C2E2B832826003B41F0 /* DogPhotoViewController.swift */; };
 		93782C312B832865003B41F0 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93782C302B832865003B41F0 /* CollectionViewCell.swift */; };
+		93D8D3092B85C16900A218B0 /* DogDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93D8D3082B85C16900A218B0 /* DogDetailViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		9372916E2B7F447A001C2507 /* DogListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogListModel.swift; sourceTree = "<group>"; };
 		93782C2E2B832826003B41F0 /* DogPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogPhotoViewController.swift; sourceTree = "<group>"; };
 		93782C302B832865003B41F0 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		93D8D3082B85C16900A218B0 /* DogDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DogDetailViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 				937291572B7F40DB001C2507 /* DogListViewController.swift */,
 				93782C2E2B832826003B41F0 /* DogPhotoViewController.swift */,
 				93782C302B832865003B41F0 /* CollectionViewCell.swift */,
+				93D8D3082B85C16900A218B0 /* DogDetailViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -171,6 +174,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				93D8D3092B85C16900A218B0 /* DogDetailViewController.swift in Sources */,
 				93782C2F2B832827003B41F0 /* DogPhotoViewController.swift in Sources */,
 				9372916F2B7F447A001C2507 /* DogListModel.swift in Sources */,
 				93782C312B832865003B41F0 /* CollectionViewCell.swift in Sources */,

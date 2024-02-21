@@ -48,7 +48,6 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
             
             imageURLs = photoResponse.message.compactMap{ URL(string: $0) }
             dogCollectionView.reloadData()
-            print(photoResponse)
         } catch {
             print("Error fetching dog photos: \(error)")
         }
@@ -66,7 +65,16 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
         return cell
         
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toDetail",
+           let indexPath = dogCollectionView.indexPathsForSelectedItems?.first,
+           let destination = segue.destination as? DogDetailViewController {
+            destination.breedsImage = imageURLs
+        }
+    }
+    
 }
+
 
 
 
@@ -74,11 +82,12 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
 extension DogPhotoViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
                         UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let screenWidth = UIScreen.main.bounds.width
-        let cellWidth: CGFloat = screenWidth / 2
-        let cellHeight = cellWidth
-        return CGSize(width: cellWidth, height: cellHeight)
+        let numberOfCell: CGFloat = 2
+        let cellWidth = UIScreen.main.bounds.size.width / numberOfCell - 2
+        dogCollectionView.contentMode = .scaleAspectFill
+        return CGSize(width: cellWidth, height: cellWidth)
     }
+   
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout:
                         UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {

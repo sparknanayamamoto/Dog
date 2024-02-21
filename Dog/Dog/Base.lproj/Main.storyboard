@@ -84,33 +84,34 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Lem-fa-OTT">
                                 <rect key="frame" x="0.0" y="103" width="393" height="715"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ITO-IK-g9D">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" id="1uB-Je-dpT">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="imageCollectionViewCell" id="I70-5J-vIc" customClass="CollectionViewCell" customModule="Dog" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="center" reuseIdentifier="imageCollectionViewCell" id="I70-5J-vIc" customClass="CollectionViewCell" customModule="Dog" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="g52-GG-q2A">
-                                            <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Vfd-bT-DGQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Obs-Dv-t6z">
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Obs-Dv-t6z">
                                                     <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Obs-Dv-t6z" firstAttribute="leading" secondItem="g52-GG-q2A" secondAttribute="leading" id="S5a-Fq-1hf"/>
+                                                <constraint firstItem="Obs-Dv-t6z" firstAttribute="leading" secondItem="Vfd-bT-DGQ" secondAttribute="leading" id="S5a-Fq-1hf"/>
                                                 <constraint firstAttribute="bottom" secondItem="Obs-Dv-t6z" secondAttribute="bottom" id="eqA-fX-Uo5"/>
                                                 <constraint firstAttribute="trailing" secondItem="Obs-Dv-t6z" secondAttribute="trailing" id="lk0-yd-BZs"/>
-                                                <constraint firstItem="Obs-Dv-t6z" firstAttribute="top" secondItem="g52-GG-q2A" secondAttribute="top" id="yM0-hk-DU5"/>
+                                                <constraint firstItem="Obs-Dv-t6z" firstAttribute="top" secondItem="Vfd-bT-DGQ" secondAttribute="top" id="yM0-hk-DU5"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <connections>
                                             <outlet property="dogImage" destination="Obs-Dv-t6z" id="hEn-X2-AdD"/>
+                                            <segue destination="HxM-YP-baY" kind="show" identifier="toDetail" id="gdh-YE-FcT"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -137,6 +138,40 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Mo-6i-HiK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1381" y="-2"/>
+        </scene>
+        <!--Dog Detail View Controller-->
+        <scene sceneID="PGP-Yl-bYX">
+            <objects>
+                <viewController id="HxM-YP-baY" customClass="DogDetailViewController" customModule="Dog" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ghy-Da-0is">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-a7-2HZ">
+                                <rect key="frame" x="16" y="103" width="361" height="715"/>
+                                <viewLayoutGuide key="contentLayoutGuide" id="a5a-B1-2yc"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="NjU-HX-lI6"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="7OV-Wj-Qls"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pXO-a7-2HZ" firstAttribute="top" secondItem="7OV-Wj-Qls" secondAttribute="top" id="9ok-jg-ISY"/>
+                            <constraint firstItem="pXO-a7-2HZ" firstAttribute="leading" secondItem="7OV-Wj-Qls" secondAttribute="leading" id="Byd-PP-Pmc"/>
+                            <constraint firstItem="pXO-a7-2HZ" firstAttribute="centerY" secondItem="ghy-Da-0is" secondAttribute="centerY" id="Gcr-CF-Wps"/>
+                            <constraint firstItem="7OV-Wj-Qls" firstAttribute="trailing" secondItem="pXO-a7-2HZ" secondAttribute="trailing" id="Wxl-3m-p5v"/>
+                            <constraint firstItem="pXO-a7-2HZ" firstAttribute="bottom" secondItem="7OV-Wj-Qls" secondAttribute="bottom" id="kuI-G2-E3Y"/>
+                            <constraint firstItem="pXO-a7-2HZ" firstAttribute="centerX" secondItem="ghy-Da-0is" secondAttribute="centerX" id="zpL-9G-dfT"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="Cat-81-svc"/>
+                    <connections>
+                        <outlet property="imageScrollView" destination="pXO-a7-2HZ" id="dvT-6U-vYa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K1e-Sd-heR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2275.5725190839694" y="-2.1126760563380285"/>
         </scene>
     </scenes>
     <resources>
