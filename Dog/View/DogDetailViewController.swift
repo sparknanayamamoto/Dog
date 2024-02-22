@@ -122,16 +122,6 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
             // 高さが画面に収まる場合は、幅を画面に合わせる
             dogImageView.frame.size = CGSize(width: scrollViewWidth, height: scaledHeight)
         }
-        
-        // もし画像の高さがscrollViewの高さより小さい場合、中央に寄せる
-        let yOffset = max((scrollViewHeight - dogImageView.frame.height) / 2, 0)
-        dogImageView.frame.origin.y = yOffset
-        
-        // もし画像の幅がscrollViewの幅より小さい場合、左側に寄せる
-        let xOffset = max((scrollViewWidth - dogImageView.frame.width) / 2, 0)
-        dogImageView.frame.origin.x = xOffset
-        imageScrollView.contentSize = dogImageView.frame.size
-        
     }
     
     @objc private func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
