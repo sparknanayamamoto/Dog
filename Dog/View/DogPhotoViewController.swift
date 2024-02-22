@@ -18,7 +18,7 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
     let dog = Dog()
     var selectedBreeds: String?
     var imageURLs: [URL] = []
-    var selectedIndex:Int = 0
+    var selectedIndex = 0
     
     @IBOutlet weak var dogCollectionView: UICollectionView!
     
@@ -46,7 +46,6 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
         do {
             let photoResponse = try await
             AF.request(apiUrl).serializingDecodable(DogImages.self).value
-            
             imageURLs = photoResponse.message.compactMap{ URL(string: $0) }
             dogCollectionView.reloadData()
         } catch {
@@ -71,7 +70,7 @@ class DogPhotoViewController: UIViewController, UICollectionViewDataSource {
            let indexPath = dogCollectionView.indexPathsForSelectedItems?.first,
            let destinationVC = segue.destination as? DogDetailViewController {
             destinationVC.imageURLs = imageURLs
-            destinationVC.selectedIndex = selectedIndex
+            destinationVC.selectedIndex = indexPath.row
             print(imageURLs)
         }
     }

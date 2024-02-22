@@ -150,15 +150,18 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pXO-a7-2HZ">
                                 <rect key="frame" x="16" y="103" width="361" height="715"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jhH-cD-eme">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" preservesSuperviewLayoutMargins="YES" layoutMarginsFollowReadableWidth="YES" id="jhH-cD-eme">
                                         <rect key="frame" x="0.0" y="0.0" width="393" height="715"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="NjU-HX-lI6" firstAttribute="trailing" secondItem="jhH-cD-eme" secondAttribute="trailing" id="HLP-MZ-amb"/>
                                     <constraint firstItem="jhH-cD-eme" firstAttribute="top" secondItem="NjU-HX-lI6" secondAttribute="top" id="MK7-Lf-p5D"/>
+                                    <constraint firstItem="jhH-cD-eme" firstAttribute="height" secondItem="pXO-a7-2HZ" secondAttribute="height" id="UeI-pN-Jpy"/>
                                     <constraint firstItem="NjU-HX-lI6" firstAttribute="bottom" secondItem="jhH-cD-eme" secondAttribute="bottom" id="XOB-YY-XAH"/>
                                     <constraint firstItem="jhH-cD-eme" firstAttribute="leading" secondItem="NjU-HX-lI6" secondAttribute="leading" id="XmM-gI-uJb"/>
+                                    <constraint firstItem="jhH-cD-eme" firstAttribute="width" secondItem="pXO-a7-2HZ" secondAttribute="width" id="mJi-gU-iQb"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="a5a-B1-2yc"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="NjU-HX-lI6"/>

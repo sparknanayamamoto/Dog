@@ -12,77 +12,62 @@ import AlamofireImage
 class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     var imageURLs: [URL] = []
     var selectedIndex = 0
-    
+    let minZoomScale: CGFloat = 1.0
+    let maxZoomScale: CGFloat = 5.0
     
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var dogImageView: UIImageView!
     
-    let minZoomScale: CGFloat = 1.0
-    let maxZoomScale: CGFloat = 4.0
+    @objc private func scrollViewDoubleTapped(_ gesture: UITapGestureRecognizer) {
+        guard let scrollView = gesture.view as? UIScrollView else { return }
+        if scrollView.zoomScale == minZoomScale {
+            // タップされた場所を中心に最大に拡大する
+            let location = gesture.location(in: scrollView)
+            let rect = zoomRect(for: scrollView, scale: maxZoomScale, center: location)
+            scrollView.zoom(to: rect, animated: true)
+        } else {
+            // 最小に戻す
+            scrollView.setZoomScale(minZoomScale, animated: true)
+        }
+    }
+    
+    private func zoomRect(for scrollView: UIScrollView, scale: CGFloat, center: CGPoint) -> CGRect {
+        var zoomRect = CGRect.zero
+        zoomRect.size.width = scrollView.frame.size.width / scale
+        zoomRect.size.height = scrollView.frame.size.height / scale
+        zoomRect.origin.x = center.x - (zoomRect.size.width / 2.0)
+        zoomRect.origin.y = center.y - (zoomRect.size.height / 2.0)
+        return zoomRect
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dogImageView.contentMode = .scaleAspectFit
-        if selectedIndex < imageURLs.count {
-                    let selectedImageURL = imageURLs[selectedIndex]
-
-                    // AlamofireImageを使用して画像を非同期で取得して表示
-                    AF.request(selectedImageURL).responseImage { response in
-                        if case .success(let image) = response.result {
-                            self.dogImageView.image = image
-                        }
-                    }
-                }
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
         
-        adjustImageViewSize()
-        updateContentInset()
-    }
-    
-    func showImage(imageView: UIImageView, url: String) {
-            let url = URL(string: url)
-            do {
-                let data = try Data(contentsOf: url!)
-                let image = UIImage(data: data)
-                imageView.image = image
-                
-            } catch let err {
-                print("Error: \(err.localizedDescription)")
-            }
-        }
-    
-    
-    func setupScrollView() {
-        imageScrollView.delegate = self
+        // UIScrollViewの設定
         imageScrollView.minimumZoomScale = minZoomScale
         imageScrollView.maximumZoomScale = maxZoomScale
-        imageScrollView.showsVerticalScrollIndicator = false
-        imageScrollView.showsHorizontalScrollIndicator = false
-        imageScrollView.addSubview(dogImageView)
+        imageScrollView.delegate = self
+        
+        // UIImageViewの設定
+        if selectedIndex < imageURLs.count {
+            let selectedImageURL = imageURLs[selectedIndex]
+            // AlamofireImageを使用して画像を非同期で取得して表示
+            AF.request(selectedImageURL).responseImage { response in
+                if case .success(let image) = response.result {
+                    self.dogImageView.image = image
+                    self.dogImageView.contentMode = .scaleAspectFit
+                    self.imageScrollView.contentSize = image.size
+                }
+            }
+        }
+        
+        // ダブルタップジェスチャーの設定
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        imageScrollView.addGestureRecognizer(doubleTapGesture)
     }
     
-    func adjustImageViewSize() {
-        guard let size = dogImageView.image?.size, dogImageView.frame.isEmpty else { return }
-        let wRate = imageScrollView.bounds.width / size.width
-        let hRate = imageScrollView.bounds.height / size.height
-        let rate = min(wRate, hRate, 1)
-        dogImageView.frame.size = CGSize(width: size.width * rate, height: size.height * rate)
-        // contentSize を画像サイズと同じにする
-        imageScrollView.contentSize = dogImageView.frame.size
-    }
-    
-    func updateContentInset() {
-        imageScrollView.contentInset = UIEdgeInsets(
-            top: max((imageScrollView.frame.height - dogImageView.frame.height) / 2, 0),
-            left: max((imageScrollView.frame.width - dogImageView.frame.width) / 2, 0),
-            bottom: 0,
-            right: 0
-        )
-    }
-    
+    // UIScrollViewDelegateメソッド: 拡大・縮小するために必要
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return dogImageView
     }
@@ -91,8 +76,24 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
         updateContentInset()
     }
     
-    
-    
+    func updateContentInset() {
+        let imageSize = dogImageView.frame.size
+        let boundsSize = imageScrollView.bounds.size
+        var contentInset = UIEdgeInsets.zero
+        
+        if imageSize.width < boundsSize.width {
+            contentInset.left = (boundsSize.width - imageSize.width) / 2
+            contentInset.right = contentInset.left
+        }
+        
+        if imageSize.height < boundsSize.height {
+            contentInset.top = (boundsSize.height - imageSize.height) / 2
+            contentInset.bottom = contentInset.top
+        }
+        
+        imageScrollView.contentInset = contentInset
+    }
 }
+
 
 

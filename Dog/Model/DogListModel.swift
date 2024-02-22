@@ -26,13 +26,11 @@ class Dog {
         guard let urlString = URL(string: "https://dog.ceo/api/breeds/list/all") else {
             return .failure(.invalidURL)
         }
-        
         do {
             let (data,_) = try await URLSession.shared.data(from: urlString)
             let decoder = JSONDecoder()
             let dogJsonData = try decoder.decode(DogResponse.self, from: data)
             return .success(dogJsonData)
-            
         } catch {
             return .failure(.decodeError)
         }
