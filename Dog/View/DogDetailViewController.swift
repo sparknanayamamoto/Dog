@@ -18,18 +18,6 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var dogImageView: UIImageView!
     
-    @objc private func scrollViewDoubleTapped(_ gesture: UITapGestureRecognizer) {
-        guard let scrollView = gesture.view as? UIScrollView else { return }
-        if scrollView.zoomScale == minZoomScale {
-            // タップされた場所を中心に最大に拡大する
-            let location = gesture.location(in: scrollView)
-            let rect = zoomRect(for: scrollView, scale: maxZoomScale, center: location)
-            scrollView.zoom(to: rect, animated: true)
-        } else {
-            // 最小に戻す
-            scrollView.setZoomScale(minZoomScale, animated: true)
-        }
-    }
     
     private func zoomRect(for scrollView: UIScrollView, scale: CGFloat, center: CGPoint) -> CGRect {
         var zoomRect = CGRect.zero
@@ -42,12 +30,10 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
         imageScrollView.minimumZoomScale = minZoomScale
         imageScrollView.maximumZoomScale = maxZoomScale
         imageScrollView.delegate = self
-
-        // UIImageViewの設定
+        
         if selectedIndex < imageURLs.count {
             let selectedImageURL = imageURLs[selectedIndex]
             // AlamofireImageを使用して画像を非同期で取得して表示
@@ -63,8 +49,32 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
         imageScrollView.addGestureRecognizer(doubleTapGesture)
+        
+        // スワイプジェスチャーの追加
+        let swipeLeftGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        swipeLeftGesture.direction = .left
+        imageScrollView.addGestureRecognizer(swipeLeftGesture)
+        let swipeRightGesture = UISwipeGestureRecognizer(target: self, action: #selector(handleSwipeGesture(_:)))
+        swipeRightGesture.direction = .right
+        imageScrollView.addGestureRecognizer(swipeRightGesture)
+        
+        // ページング効果を有効にする
+        imageScrollView.isPagingEnabled = true
     }
     
+    
+    @objc private func scrollViewDoubleTapped(_ gesture: UITapGestureRecognizer) {
+        guard let scrollView = gesture.view as? UIScrollView else { return }
+        if scrollView.zoomScale == minZoomScale {
+            // タップされた場所を中心に最大に拡大する
+            let location = gesture.location(in: scrollView)
+            let rect = zoomRect(for: scrollView, scale: maxZoomScale, center: location)
+            scrollView.zoom(to: rect, animated: true)
+        } else {
+            // 最小に戻す
+            scrollView.setZoomScale(minZoomScale, animated: true)
+        }
+    }
     // UIScrollViewDelegateメソッド: 拡大・縮小するために必要
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return dogImageView
@@ -78,7 +88,7 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
         let imageSize = dogImageView.frame.size
         let boundsSize = imageScrollView.bounds.size
         var contentInset = UIEdgeInsets.zero
-
+        
         if imageSize.width < boundsSize.width {
             contentInset.left = (boundsSize.width - imageSize.width) / 2
             contentInset.right = contentInset.left
@@ -86,7 +96,7 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
             contentInset.left = 0
             contentInset.right = 0
         }
-
+        
         if imageSize.height < boundsSize.height {
             contentInset.top = (boundsSize.height - imageSize.height) / 2
             contentInset.bottom = contentInset.top
@@ -94,7 +104,6 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
             contentInset.top = 0
             contentInset.bottom = 0
         }
-
         imageScrollView.contentInset = contentInset
     }
     
@@ -121,10 +130,46 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
         // もし画像の幅がscrollViewの幅より小さい場合、左側に寄せる
         let xOffset = max((scrollViewWidth - dogImageView.frame.width) / 2, 0)
         dogImageView.frame.origin.x = xOffset
-        
         imageScrollView.contentSize = dogImageView.frame.size
         
     }
+    
+    @objc private func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
+           switch gesture.direction {
+           case .left:
+               showNextImage()
+           case .right:
+               showPreviousImage()
+           default:
+               break
+           }
+       }
+    
+    private func showNextImage() {
+        guard selectedIndex < imageURLs.count - 1 else { return }
+        selectedIndex += 1
+        updateImageView()
+    }
+    // 前の画像を表示
+    private func showPreviousImage() {
+        guard selectedIndex > 0 else { return }
+        selectedIndex -= 1
+        updateImageView()
+    }
+    
+    // 画像の更新
+    private func updateImageView() {
+        if selectedIndex < imageURLs.count {
+            let selectedImageURL = imageURLs[selectedIndex]
+            AF.request(selectedImageURL).responseImage { response in
+                if case .success(let image) = response.result {
+                    self.dogImageView.image = image
+                    self.adjustImageViewSize()
+                }
+            }
+        }
+    }
+
 }
 
 
