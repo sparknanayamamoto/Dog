@@ -13,7 +13,7 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     var imageURLs: [URL] = []
     var selectedIndex = 0
     let minZoomScale: CGFloat = 1.0
-    let maxZoomScale: CGFloat = 5.0
+    let maxZoomScale: CGFloat = 3.0
     
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var dogImageView: UIImageView!
@@ -42,12 +42,11 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        // UIScrollViewの設定
+    
         imageScrollView.minimumZoomScale = minZoomScale
         imageScrollView.maximumZoomScale = maxZoomScale
         imageScrollView.delegate = self
-        
+
         // UIImageViewの設定
         if selectedIndex < imageURLs.count {
             let selectedImageURL = imageURLs[selectedIndex]
@@ -60,7 +59,6 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
-        
         // ダブルタップジェスチャーの設定
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
@@ -80,18 +78,52 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
         let imageSize = dogImageView.frame.size
         let boundsSize = imageScrollView.bounds.size
         var contentInset = UIEdgeInsets.zero
-        
+
         if imageSize.width < boundsSize.width {
             contentInset.left = (boundsSize.width - imageSize.width) / 2
             contentInset.right = contentInset.left
+        } else {
+            contentInset.left = 0
+            contentInset.right = 0
         }
-        
+
         if imageSize.height < boundsSize.height {
             contentInset.top = (boundsSize.height - imageSize.height) / 2
             contentInset.bottom = contentInset.top
+        } else {
+            contentInset.top = 0
+            contentInset.bottom = 0
+        }
+
+        imageScrollView.contentInset = contentInset
+    }
+    
+    func adjustImageViewSize() {
+        guard let imageSize = dogImageView.image?.size else { return }
+        
+        let aspectRatio = imageSize.width / imageSize.height
+        let scrollViewWidth = imageScrollView.bounds.width
+        let scrollViewHeight = imageScrollView.bounds.height
+        let scaledHeight = scrollViewWidth / aspectRatio
+        
+        if scaledHeight > scrollViewHeight {
+            // 高さが画面よりも大きい場合は、高さを画面に合わせる
+            dogImageView.frame.size = CGSize(width: scrollViewHeight * aspectRatio, height: scrollViewHeight)
+        } else {
+            // 高さが画面に収まる場合は、幅を画面に合わせる
+            dogImageView.frame.size = CGSize(width: scrollViewWidth, height: scaledHeight)
         }
         
-        imageScrollView.contentInset = contentInset
+        // もし画像の高さがscrollViewの高さより小さい場合、中央に寄せる
+        let yOffset = max((scrollViewHeight - dogImageView.frame.height) / 2, 0)
+        dogImageView.frame.origin.y = yOffset
+        
+        // もし画像の幅がscrollViewの幅より小さい場合、左側に寄せる
+        let xOffset = max((scrollViewWidth - dogImageView.frame.width) / 2, 0)
+        dogImageView.frame.origin.x = xOffset
+        
+        imageScrollView.contentSize = dogImageView.frame.size
+        
     }
 }
 
