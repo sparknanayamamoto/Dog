@@ -3,12 +3,49 @@
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--web-->
+        <scene sceneID="lOe-Wq-GR7">
+            <objects>
+                <viewController id="DQo-tL-EDi" customClass="WebViewController" customModule="Dog" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="qRb-d2-mRy">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <wkWebView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="12g-hV-41e">
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
+                                <color key="backgroundColor" red="0.36078431370000003" green="0.38823529410000002" blue="0.4039215686" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <wkWebViewConfiguration key="configuration">
+                                    <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                    <wkPreferences key="preferences"/>
+                                </wkWebViewConfiguration>
+                            </wkWebView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="rQ8-py-sZW"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="rQ8-py-sZW" firstAttribute="trailing" secondItem="12g-hV-41e" secondAttribute="trailing" id="M8G-qg-Qv1"/>
+                            <constraint firstItem="rQ8-py-sZW" firstAttribute="bottom" secondItem="12g-hV-41e" secondAttribute="bottom" id="Ziq-EM-yTg"/>
+                            <constraint firstItem="12g-hV-41e" firstAttribute="top" secondItem="rQ8-py-sZW" secondAttribute="top" id="hZr-17-6pl"/>
+                            <constraint firstItem="12g-hV-41e" firstAttribute="leading" secondItem="rQ8-py-sZW" secondAttribute="leading" id="hdO-xT-cbb"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="web" image="lanyardcard" catalog="system" id="W7u-OY-YBZ"/>
+                    <navigationItem key="navigationItem" id="xSQ-35-G5M"/>
+                    <connections>
+                        <outlet property="webView" destination="12g-hV-41e" id="iFa-lW-SwN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uSt-hI-XId" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="932" y="754"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="vue-og-wf1">
             <objects>
@@ -18,14 +55,14 @@
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="E0b-eD-dhi"/>
+                        <segue destination="nU9-CY-JqY" kind="relationship" relationship="rootViewController" id="AYe-sh-UWA"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cid-ih-tVS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-398" y="-2"/>
+            <point key="canvasLocation" x="-630" y="-2"/>
         </scene>
-        <!--View Controller-->
+        <!--Dogs-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Dog" customModuleProvider="target" sceneMemberID="viewController">
@@ -34,7 +71,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="fyY-KZ-Tna">
-                                <rect key="frame" x="0.0" y="103" width="393" height="715"/>
+                                <rect key="frame" x="0.0" y="103" width="393" height="666"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="TableViewCell" id="Ye4-HE-Dfh">
@@ -64,6 +101,9 @@
                             <constraint firstItem="fyY-KZ-Tna" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="bFm-34-aQb"/>
                         </constraints>
                     </view>
+                    <tabBarItem key="tabBarItem" tag="1" title="Dogs" id="IOJ-0l-b1I">
+                        <imageReference key="selectedImage" image="book.closed.fill" catalog="system" symbolScale="default"/>
+                    </tabBarItem>
                     <navigationItem key="navigationItem" id="ZFN-Qx-czF"/>
                     <connections>
                         <outlet property="dogList" destination="fyY-KZ-Tna" id="v3W-hB-owE"/>
@@ -71,7 +111,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="468" y="-2"/>
+            <point key="canvasLocation" x="1394.6564885496182" y="-2.1126760563380285"/>
         </scene>
         <!--Dog Photo View Controller-->
         <scene sceneID="0Sy-Ts-hA7">
@@ -137,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Mo-6i-HiK" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1381" y="-2"/>
+            <point key="canvasLocation" x="2307.6335877862593" y="-2.1126760563380285"/>
         </scene>
         <!--Dog Detail View Controller-->
         <scene sceneID="PGP-Yl-bYX">
@@ -186,10 +226,32 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K1e-Sd-heR" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2275.5725190839694" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="3202.2900763358775" y="-2.1126760563380285"/>
+        </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="pDb-aM-eO3">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="nU9-CY-JqY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="R5E-OE-Z9i"/>
+                    <tabBar key="tabBar" tag="2" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="5H9-Hl-EkO">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="DQo-tL-EDi" kind="relationship" relationship="viewControllers" id="r3L-WQ-bkC"/>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="7f2-o4-mRN"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dZl-cQ-chZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="387" y="-2"/>
         </scene>
     </scenes>
     <resources>
+        <image name="book.closed.fill" catalog="system" width="115" height="128"/>
+        <image name="lanyardcard" catalog="system" width="108" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
