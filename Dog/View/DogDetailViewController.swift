@@ -14,6 +14,7 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     var selectedIndex = 0
     let minZoomScale: CGFloat = 1.0
     let maxZoomScale: CGFloat = 3.0
+    var isZoomed = false
     
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var dogImageView: UIImageView!
@@ -74,7 +75,10 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
             // 最小に戻す
             scrollView.setZoomScale(minZoomScale, animated: true)
         }
+        isZoomed = !isZoomed
+        navigationController?.setNavigationBarHidden(isZoomed, animated: true)
     }
+    
     // UIScrollViewDelegateメソッド: 拡大・縮小するために必要
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return dogImageView
@@ -125,15 +129,15 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     }
     
     @objc private func handleSwipeGesture(_ gesture: UISwipeGestureRecognizer) {
-           switch gesture.direction {
-           case .left:
-               showNextImage()
-           case .right:
-               showPreviousImage()
-           default:
-               break
-           }
-       }
+        switch gesture.direction {
+        case .left:
+            showNextImage()
+        case .right:
+            showPreviousImage()
+        default:
+            break
+        }
+    }
     
     private func showNextImage() {
         guard selectedIndex < imageURLs.count - 1 else { return }
@@ -159,7 +163,7 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
             }
         }
     }
-
+    
 }
 
 
