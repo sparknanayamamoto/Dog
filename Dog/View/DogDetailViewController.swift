@@ -9,12 +9,15 @@ import UIKit
 import Alamofire
 import AlamofireImage
 
+
+
 class DogDetailViewController: UIViewController, UIScrollViewDelegate {
     var imageURLs: [URL] = []
     var selectedIndex = 0
     let minZoomScale: CGFloat = 1.0
     let maxZoomScale: CGFloat = 3.0
     var isZoomed = false
+    
     
     @IBOutlet weak var imageScrollView: UIScrollView!
     @IBOutlet weak var dogImageView: UIImageView!
@@ -46,6 +49,11 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
+        
+        // ピンチジェスチャーの設定
+        let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePinchGesture(_:)))
+        imageScrollView.addGestureRecognizer(pinchGesture)
+        
         // ダブルタップジェスチャーの設定
         let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(scrollViewDoubleTapped(_:)))
         doubleTapGesture.numberOfTapsRequired = 2
@@ -63,6 +71,16 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
         imageScrollView.isPagingEnabled = true
     }
     
+    // ピンチジェスチャーの処理
+    @objc private func handlePinchGesture(_ gesture: UIPinchGestureRecognizer) {
+        guard let scrollView = gesture.view as? UIScrollView else { return }
+        
+        if gesture.state == .changed {
+            scrollView.zoomScale = min(max(scrollView.zoomScale * gesture.scale, minZoomScale), maxZoomScale)
+            gesture.scale = 1.0
+        }
+    }
+    
     
     @objc private func scrollViewDoubleTapped(_ gesture: UITapGestureRecognizer) {
         guard let scrollView = gesture.view as? UIScrollView else { return }
@@ -75,10 +93,10 @@ class DogDetailViewController: UIViewController, UIScrollViewDelegate {
             // 最小に戻す
             scrollView.setZoomScale(minZoomScale, animated: true)
         }
+        // ダブルタップ時に拡大中はナビゲーションバーを非表示にする
         isZoomed = !isZoomed
         navigationController?.setNavigationBarHidden(isZoomed, animated: true)
     }
-    
     // UIScrollViewDelegateメソッド: 拡大・縮小するために必要
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return dogImageView
