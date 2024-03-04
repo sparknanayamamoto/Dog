@@ -102,7 +102,7 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" tag="1" title="Dogs" id="IOJ-0l-b1I">
-                        <imageReference key="selectedImage" image="book.closed.fill" catalog="system" symbolScale="default"/>
+                        <imageReference key="selectedImage" image="text.book.closed.fill" catalog="system" symbolScale="default"/>
                     </tabBarItem>
                     <navigationItem key="navigationItem" id="ZFN-Qx-czF"/>
                     <connections>
@@ -250,8 +250,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="book.closed.fill" catalog="system" width="115" height="128"/>
         <image name="lanyardcard" catalog="system" width="108" height="128"/>
+        <image name="text.book.closed.fill" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
