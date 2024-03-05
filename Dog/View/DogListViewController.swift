@@ -34,7 +34,9 @@ class ViewController: UIViewController, UITableViewDelegate, UITableViewDataSour
         let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath)
         let dogList = breeds[indexPath.row]
         cell.textLabel!.text = dogList
+        cell.textLabel?.font = UIFont(name: "Palatino-Roman", size: 18)
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        cell.contentView.frame.size.width = 200
         return cell
     }
     
